@@ -10,7 +10,7 @@ class ArduinoCommunication():
         self.reciever = None
 
     def connect(self):
-        self.reciever = serial.Serial(port=self.port, baudrate=self.baudrate, timeout=1, parity=serial.PARITY_EVEN, stopbits=1)
+        self.reciever = serial.Serial(port=str(self.port), baudrate=self.baudrate, timeout=1, parity=serial.PARITY_EVEN, stopbits=1)
 
     def send(self, data:str):
         if self.reciever == None: return

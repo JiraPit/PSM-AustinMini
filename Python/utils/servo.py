@@ -1,8 +1,11 @@
 import numpy as np
 from utils.serial_communication import ArduinoCommunication
+from utils.config import Configuration
 
-arduino = ArduinoCommunication(port=0,baudrate=9600)
-arduino.connect()
+config = Configuration()
+
+arduino = ArduinoCommunication(port=config.arduino_port,baudrate=9600)
+if config.serial_enabled: arduino.connect()
 
 class Servo:
     def __init__(self,
@@ -26,9 +29,7 @@ class Servo:
         return data
 
     def move(self,angle: int) -> None:
-        if self.pin == None:
-            print("Please connect to a serial port")
-            return
+        if self.pin == None: print("Please connect to a serial port"); return
         arduino.send(self._format_data(self.pin,angle))
         self.angle = angle
 
@@ -37,12 +38,12 @@ class Servo:
             steps = np.linspace(self.angle,angle,round((angle-self.angle)/self.step_legth))
         elif angle < self.angle:
             steps = np.linspace(angle,self.angle,round((self.angle-angle)/self.step_legth))
-        else:
-            return
+        else: return
         self.queue = steps 
         self.step_counter = 0
     
     def step(self) -> None:
+        if len(self.queue) < 1: return
         self.move(self.queue[self.step_counter])
         self.step_counter += 1
 
