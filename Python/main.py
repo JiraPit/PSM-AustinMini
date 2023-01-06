@@ -4,17 +4,19 @@ import cv2
 from utils.config import Configuration
 from utils.servo import Servo
 
+config = Configuration()
 
-Config = Configuration()
 #/Camera
-CAM = cv2.VideoCapture(Config.VideoPort)
+CAM = cv2.VideoCapture(config.VideoPort)
+
 #/Models
 MP_POSE = mp.solutions.pose
 MP_HANDS = mp.solutions.hands
 DRAWER = mp.solutions.drawing_utils
 LANDMARKS = mp.solutions.pose.PoseLandmark
-POSE_MODEL = MP_POSE.Pose(model_complexity=Config.ModelComplexity)
+POSE_MODEL = MP_POSE.Pose(model_complexity=config.ModelComplexity)
 HANDS_MODEL = MP_HANDS.Hands()
+
 #/Servos
 shoulder_servo = Servo(default_angle=0,step_legth=5).connect(pin=3)
 elbow_servo = Servo(default_angle=0,step_legth=5).connect(pin=4)
@@ -39,13 +41,13 @@ while True:
     #-post-processing
     if pose_result.pose_world_landmarks:
         pose_landmarks = pose_result.pose_world_landmarks.landmark
-        if Config.draw: DRAWER.draw_landmarks(img,pose_result.pose_landmarks,MP_POSE.POSE_CONNECTIONS)
+        if config.draw: DRAWER.draw_landmarks(img,pose_result.pose_landmarks,MP_POSE.POSE_CONNECTIONS)
         elbow_servo.queue_steps(10)
     if hand_result.multi_hand_world_landmarks:
         hand_landmarks = hand_result.multi_hand_world_landmarks
         hand_landmarks = [hand_landmarks[side] for side in range(len(hand_landmarks)) if hand_result.multi_handedness[side].classification[0].label[0] == "R"]
 
-    if Config.cv_show:
+    if config.cv_show:
         cv2.imshow('Result',img)
 
     if(cv2.waitKey(1) & 0xFF == ord('q')):

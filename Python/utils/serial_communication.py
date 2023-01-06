@@ -1,6 +1,8 @@
 import serial
 from utils.config import Configuration
 
+config = Configuration();
+
 class ArduinoCommunication():
     def __init__(self,port: str or int, baudrate: int) -> None:
         self.port = port
@@ -12,5 +14,5 @@ class ArduinoCommunication():
 
     def send(self, data:str):
         if self.reciever == None: return
-        if Configuration().serial_enabled:
+        if config.serial_enabled:
             self.reciever.write(bytes(data.replace("\n","").replace("\t","").replace(" ","").replace(",",""),'UTF-8'))
