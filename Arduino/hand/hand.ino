@@ -2,7 +2,6 @@
 #include <LinkedList.h>
 
 LinkedList<Servo> servos = LinkedList<Servo>();
-char Buf[30];
 
 void setup() {
   Servo elbow;
@@ -23,10 +22,10 @@ void setup() {
 void loop() {
   if (Serial.available() > 0) {
     String rec = Serial.readStringUntil('$');
-    String pin = String(rec[0]);
-    String angle = rec.substring(1);
+    int pin = String(rec[0]).toInt();
+    int angle = rec.substring(1).toInt();
     
-    servos[pin.toInt()].write(angle.toInt());
+    servos[pin].write(angle);
   }
 }
 
