@@ -14,59 +14,57 @@ class Seta:
     def degrees(self):
         return round(np.degrees(self.__seta))
 
-class HandProcessing:
-    def __init__(self,hand) -> None:
-        self.hand = hand
+class VectorProcessing:
 
-    def normalized_absolute_vector(self,name:int,ref_point,max:float) -> float:
-        landmarks = self.hand.landmark[name]
-        AbsoluteVector = sqrt(
-            (landmarks.x - ref_point.x)**2 
-            + (landmarks.y - ref_point.y)**2 
-            + (landmarks.z - ref_point.z)**2
-            )
-        return AbsoluteVector/max
-
-class ArmProcessing:
-
-    def __init__(self,start,end,mid) -> None:
+    def __init__(self,start,end,mid=None) -> None:
         self.__start = start
         self.__mid = mid
         self.__end = end
 
-    def around_ALL(self) -> Seta:
+    def by_angle_All(self) -> Seta:
         v1 = np.array([self.__mid.x,self.__mid.y,self.__mid.z]) - np.array([self.__start.x,self.__start.y,self.__start.z])
         v2 = np.array([self.__mid.x,self.__mid.y,self.__mid.z]) - np.array([self.__end.x,self.__end.y,self.__end.z]) 
         seta = acos(np.dot(v1, v2)/np.linalg.norm(v1)/np.linalg.norm(v2))
         return Seta(seta)
 
-    def around_Z(self) -> Seta:
+    def by_angle_Z(self) -> Seta:
         v1 = np.array([self.__mid.x,self.__mid.y]) - np.array([self.__start.x,self.__start.y])
         v2 = np.array([self.__mid.x,self.__mid.y]) - np.array([self.__end.x,self.__end.y]) 
         seta = acos(np.dot(v1, v2)/np.linalg.norm(v1)/np.linalg.norm(v2))
         return Seta(seta)
 
-    def around_X(self) -> Seta:
+    def by_angle_X(self) -> Seta:
         v1 = np.array([self.__mid.y,self.__mid.z]) - np.array([self.__start.y,self.__start.z])
         v2 = np.array([self.__mid.y,self.__mid.z]) - np.array([self.__end.y,self.__end.z]) 
         seta = acos(np.dot(v1, v2)/np.linalg.norm(v1)/np.linalg.norm(v2))
         return Seta(seta)
 
-    def around_Y(self) -> Seta:
+    def by_angle_Y(self) -> Seta:
         v1 = np.array([self.__mid.x,self.__mid.z]) - np.array([self.__start.x,self.__start.z])
         v2 = np.array([self.__mid.x,self.__mid.z]) - np.array([self.__end.x,self.__end.z]) 
         seta = acos(np.dot(v1, v2)/np.linalg.norm(v1)/np.linalg.norm(v2))
         return Seta(seta)
 
-    def by_distance_X(self,absolue_max) -> int:
-        xDistance = self.__start.x - self.__end.x
-        normalized_distance = abs(xDistance)/absolue_max
-        return normalized_distance * (xDistance/abs(xDistance))
+    def by_distance_X(self,bounds_original:tuple,bounds_final:tuple,normalize:bool = True) -> float:
+        x_distance = float(self.__start.x - self.__end.x)
+        return self.__normalize(x=x_distance,bounds_original=bounds_original,bounds_final=bounds_final) if normalize else x_distance
 
-    def by_distance_Y(self,absolue_max) -> int:
-        xDistance = self.__start.y - self.__end.y
-        normalized_distance = abs(xDistance)/absolue_max
-        return normalized_distance * (xDistance/abs(xDistance))
+    def by_distance_Y(self,bounds_original:tuple,bounds_final:tuple,normalize:bool = True) -> float:
+        y_distance = float(self.__start.y - self.__end.y)
+        return self.__normalize(x=y_distance,bounds_original=bounds_original,bounds_final=bounds_final) if normalize else y_distance
+
+    def by_distance_All(self,bounds_original:tuple,bounds_final:tuple,normalize:bool = True) -> float:
+        all_distance = sqrt(
+            (self.__start.x - self.__end.x)**2 
+            + (self.__start.y - self.__end.y)**2 
+            + (self.__start.z - self.__end.z)**2
+            )
+        return self.__normalize(x=all_distance,bounds_original=bounds_original,bounds_final=bounds_final) if normalize else all_distance
+
+    def __normalize (self,x: float, bounds_original: tuple, bounds_final: tuple) -> float:
+        x = bounds_final[0] + (x - bounds_original[0]) * (bounds_final[1] - bounds_final[0]) / (bounds_original[1] - bounds_original[0])
+        x = min(max(x,bounds_final[0]),bounds_final[1])
+        return x
 
 
 

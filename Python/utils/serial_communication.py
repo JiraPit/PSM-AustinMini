@@ -13,6 +13,5 @@ class ArduinoCommunication():
         self.reciever = serial.Serial(port=str(self.port), baudrate=self.baudrate, timeout=1, parity=serial.PARITY_EVEN, stopbits=1)
 
     def send(self, data:str):
-        if self.reciever == None: return
-        if config.serial_enabled:
-            self.reciever.write(bytes(data.replace("\n","").replace("\t","").replace(" ","").replace(",",""),'UTF-8'))
+        if (self.reciever == None) or (not config.serial_enabled): return
+        self.reciever.write(bytes(data.replace("\n","").replace("\t","").replace(" ","").replace(",","")+"$",'UTF-8'))
