@@ -12,6 +12,7 @@ class Configuration:
         #arduino_serial
         self.serial_enabled = True
         self.arduino_port = "COM5"
+        self.arduino_port = "/dev/ttyUSB0"
 
         #arm
         self.elbow_range = (-0.3,0.3)#/
