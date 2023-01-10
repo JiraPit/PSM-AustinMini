@@ -18,7 +18,7 @@ class Configuration:
         self.elbow_range = (-0.3,0.3)
         self.elbow_servo_range = (45,135)
         self.shoulder_range = (-0.18,0.15)
-        self.shoulder_servo_range = (0,120)
+        self.shoulder_servo_range = (60,180)
 
         #hands
         self.thumbf_range = (0.05,0.12)

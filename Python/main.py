@@ -1,6 +1,5 @@
 import mediapipe as mp
 import cv2
-from utils.serial_communication import ArduinoCommunication
 
 from utils.config import Configuration
 from utils.servo import Servo
@@ -20,9 +19,9 @@ HANDS_MODEL = MP_HANDS.Hands()
 
 #/Servos
 servos = {
-    # "elbow"         : Servo(default_angle=0,step_legth=5).connect(pin=2),
-    # "shoulder_right": Servo(default_angle=0,step_legth=5).connect(pin=3),
-    # "shoulder_left" : Servo(default_angle=0,step_legth=5).connect(pin=4),
+    "elbow"         : Servo(default_angle=90,step_legth=5).connect(pin=2),
+    "shoulder_right": Servo(default_angle=0,step_legth=5).connect(pin=3),
+    "shoulder_left" : Servo(default_angle=0,step_legth=5).connect(pin=4),
     "thumbf"        : Servo(default_angle=0,step_legth=180).connect(pin=5),
     "indexf"        : Servo(default_angle=0,step_legth=180).connect(pin=6),
     "middlef"       : Servo(default_angle=0,step_legth=180).connect(pin=7),
@@ -79,7 +78,6 @@ while True:
                 normalize=True,
                 bounds_original=config.thumbf_range,
                 bounds_final=config.thumbf_servo_range)
-            # print(thumbf_angle)
             servos["thumbf"].move(angle=round(thumbf_angle)) if "thumbf" in servos.keys() else None
 
             indexf_angle = VectorProcessing(
@@ -89,7 +87,6 @@ while True:
                 normalize=True,
                 bounds_original=config.indexf_range,
                 bounds_final=config.indexf_servo_range)
-            # print(indexf_angle)
             servos["indexf"].move(angle=round(indexf_angle)) if "indexf" in servos.keys() else None
             
             middlef_angle = VectorProcessing(
@@ -99,7 +96,6 @@ while True:
                 normalize=True,
                 bounds_original=config.middlef_range,
                 bounds_final=config.middlef_servo_range)
-            # print(middlef_angle)
             servos["middlef"].move(angle=round(middlef_angle)) if "middlef" in servos.keys() else None
             
             ringf_angle = VectorProcessing(
@@ -109,7 +105,6 @@ while True:
                 normalize=True,
                 bounds_original=config.ringf_range,
                 bounds_final=config.ringf_servo_range)
-            # print(ringf_angle)
             servos["ringf"].move(angle=round(ringf_angle)) if "ringf" in servos.keys() else None
             
             pinkyf_angle = VectorProcessing(
@@ -119,11 +114,7 @@ while True:
                 normalize=True,
                 bounds_original=config.pinkyf_range,
                 bounds_final=config.pinkyf_servo_range)
-            # print(pinkyf_angle)
             servos["pinkyf"].move(angle=round(pinkyf_angle)) if "pinkyf" in servos.keys() else None
-
-    # if arduino.reciever.readable:
-    #     print(arduino.reciever.read_all())
 
     for servo in servos.values(): 
         if len(servo.queue) > 0: servo.step()
