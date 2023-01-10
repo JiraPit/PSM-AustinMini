@@ -23,7 +23,7 @@ class Servo:
         return self
 
     def __format_data(self,pin:int,angle:int) -> str:
-        data = f"{pin}{angle}"
+        data = f"{pin}{angle}$"
         return data
 
     def move(self,angle: int) -> None:

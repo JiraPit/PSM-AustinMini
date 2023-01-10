@@ -1,40 +1,39 @@
 #include <Servo.h>
 #include <LinkedList.h>
 
-LinkedList<Servo> servos = LinkedList<Servo>();
-
+// LinkedList<Servo> servos = LinkedList<Servo>();
+Servo servo2;
+Servo servo3;
+Servo servo4;
+Servo servo5;
+Servo servo6;
+Servo servo7;
+Servo servo8;
+Servo servo9;
 void setup() {
-  Servo servo2;
   servo2.attach(2);
-  servos.add(servo2);
+  // servos.add(servo2);
 
-  Servo servo3;
   servo3.attach(3);
-  servos.add(servo3);
+  // servos.add(servo3);
 
-  Servo servo4;
   servo4.attach(4);
-  servos.add(servo4);
+  // servos.add(servo4);
 
-  Servo servo5;
   servo5.attach(5);
-  servos.add(servo5);
+  // servos.add(servo5);
 
-  Servo servo6;
   servo6.attach(6);
-  servos.add(servo6);
+  // servos.add(servo6);
 
-  Servo servo7;
   servo7.attach(7);
-  servos.add(servo7);
+  // servos.add(servo7);
 
-  Servo servo8;
   servo8.attach(8);
-  servos.add(servo8);
+  // servos.add(servo8);
 
-  Servo servo9;
   servo9.attach(9);
-  servos.add(servo9);
+  // servos.add(servo9);
 
   Serial.begin(9600);
 }
@@ -42,9 +41,37 @@ void setup() {
 void loop() {
   if (Serial.available() > 0) {
     String rec = Serial.readStringUntil('$');
-    int pin = String(rec[0]).toInt()-2;
+    Serial.println(rec);
+    int pin = String(rec[0]).toInt();
     int angle = rec.substring(1).toInt();
-    servos[pin].write(angle);
+    Serial.println(pin);
+    Serial.println(angle);
+    switch(pin){
+      case 2:
+        servo2.write(angle);
+        break;
+      case 3:
+        servo3.write(angle);
+        break;
+      case 4:
+        servo4.write(angle);
+        break;
+      case 5:
+        servo5.write(angle);
+        break;
+      case 6:
+        servo6.write(angle);
+        break;
+      case 7:
+        servo7.write(angle);
+        break;
+      case 8:
+        servo8.write(angle);
+        break;
+      case 9:
+        servo9.write(angle);
+        break;
+    }
   }
 }
 
