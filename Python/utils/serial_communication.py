@@ -14,4 +14,7 @@ class ArduinoCommunication():
 
     def send(self, data:str):
         if (self.reciever == None) or (not config.serial_enabled): return
-        self.reciever.write(bytes(data.replace("\n","").replace("\t","").replace(" ","").replace(",","")+"$",'UTF-8'))
+        try:
+            self.reciever.write(bytes(data.replace("\n","").replace("\t","").replace(" ","").replace(",","")+"$",'UTF-8'))
+        except Exception as e:
+            print(e)
