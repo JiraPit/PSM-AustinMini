@@ -19,14 +19,14 @@ HANDS_MODEL = MP_HANDS.Hands()
 
 #/Servos
 servos = {
-    "elbow"         : Servo(default_angle=90,step_legth=5).connect(pin=2),
-    "shoulder_right": Servo(default_angle=0,step_legth=5).connect(pin=3),
-    "shoulder_left" : Servo(default_angle=0,step_legth=5).connect(pin=4),
-    "thumbf"        : Servo(default_angle=0,step_legth=180).connect(pin=5),
-    "indexf"        : Servo(default_angle=0,step_legth=180).connect(pin=6),
-    "middlef"       : Servo(default_angle=0,step_legth=180).connect(pin=7),
-    "ringf"         : Servo(default_angle=0,step_legth=180).connect(pin=8),
-    "pinkyf"        : Servo(default_angle=0,step_legth=180).connect(pin=9)
+    "elbow"         : Servo(default_angle=90,step_legth=3).connect(pin=2),
+    "shoulder_right": Servo(default_angle=0,step_legth=3).connect(pin=3),
+    "shoulder_left" : Servo(default_angle=0,step_legth=3).connect(pin=4),
+    "thumbf"        : Servo(default_angle=90,step_legth=180).connect(pin=5),
+    "indexf"        : Servo(default_angle=90,step_legth=180).connect(pin=6),
+    "middlef"       : Servo(default_angle=90,step_legth=180).connect(pin=7),
+    "ringf"         : Servo(default_angle=90,step_legth=180).connect(pin=8),
+    "pinkyf"        : Servo(default_angle=90,step_legth=180).connect(pin=9)
 }
 
 while True:
