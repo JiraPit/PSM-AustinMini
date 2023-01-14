@@ -18,18 +18,18 @@ class Configuration:
         self.elbow_range = (-0.3,0.3)
         self.elbow_servo_range = (45,135)
         self.shoulder_range = (-0.18,0.15)
-        self.shoulder_servo_range = (60,150)
+        self.shoulder_servo_range = (60,180)
 
         #hands
         self.thumbf_range = (0.05,0.12)
-        self.thumbf_servo_range = (30,160)
+        self.thumbf_servo_range = (30,170)
         self.indexf_range = (0.07,0.15)
-        self.indexf_servo_range = (30,160)
+        self.indexf_servo_range = (30,170)
         self.middlef_range = (0.06,0.18)
-        self.middlef_servo_range = (30,160)
+        self.middlef_servo_range = (30,170)
         self.ringf_range = (0.07,0.17)
-        self.ringf_servo_range = (30,160)
+        self.ringf_servo_range = (20,170)
         self.pinkyf_range = (0.06,0.14)
-        self.pinkyf_servo_range = (30,160)
+        self.pinkyf_servo_range = (30,170)
         
     
